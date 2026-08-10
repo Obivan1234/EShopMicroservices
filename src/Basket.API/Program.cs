@@ -1,6 +1,7 @@
 
 using Basket.API.Dataж;
 using BuildingBlocks.Exceptions.Handler;
+using Discount.Grpc;
 using HealthChecks.UI.Client;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +29,20 @@ builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
     //options.InstanceName = "Basket";
+});
+
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
+{
+    options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
+})
+.ConfigurePrimaryHttpMessageHandler(() =>
+{
+    return new HttpClientHandler
+    {
+        ServerCertificateCustomValidationCallback =
+            HttpClientHandler
+                .DangerousAcceptAnyServerCertificateValidator
+    };
 });
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
