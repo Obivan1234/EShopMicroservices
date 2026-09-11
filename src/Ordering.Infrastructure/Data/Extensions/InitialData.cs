@@ -48,7 +48,17 @@ internal class InitialData
             order2.Add(ProductId.Of(new Guid("4f136e9f-ff8c-4c1f-9a33-d12f689bdab8")), 1, 650);
             order2.Add(ProductId.Of(new Guid("6ec1297b-ec0a-4aa1-be25-6726e3b51a27")), 2, 450);
 
-            return new List<Order> { order1, order2 };
+            var order3 = Order.Create(
+                            OrderId.Of(Guid.NewGuid()),
+                            CustomerId.Of(new Guid("58c49479-ec65-4de2-86e7-033c546291aa")),
+                            OrderName.Of("ORD_3"),
+                            shippingAddress: address1,
+                            billingAddress: address1,
+                            payment1);
+            order3.Add(ProductId.Of(new Guid("5334c996-8457-4cf0-815c-ed2b77c4ff61")), 1, 500);
+            order3.Add(ProductId.Of(new Guid("6ec1297b-ec0a-4aa1-be25-6726e3b51a27")), 1, 450);
+
+            return new List<Order> { order1, order2, order3 };
         }
     }
 }
