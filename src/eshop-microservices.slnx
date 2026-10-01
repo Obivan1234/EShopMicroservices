@@ -22,6 +22,9 @@
     <Project Path="Ordering.Domain/Ordering.Domain.csproj" Id="6a6a8712-d96d-4c66-ab91-05e0defeeb2b" />
     <Project Path="Ordering.Infrastructure/Ordering.Infrastructure.csproj" Id="9fced8ac-7f7c-432f-99dd-e414f99b201d" />
   </Folder>
+  <Folder Name="/WebApps/">
+    <Project Path="Shopping.Web/Shopping.Web.csproj" Id="c6dc1978-2510-4f33-8483-819b6eed300b" />
+  </Folder>
   <Project Path="docker-compose.dcproj">
     <Build />
   </Project>

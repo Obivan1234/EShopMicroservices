@@ -14,5 +14,7 @@
     </None>
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
+    <None Include="Shopping.Web\Pages\Checkout.cshtml.cs" />
+    <None Include="Shopping.Web\Pages\Confirmation.cshtml.cs" />
   </ItemGroup>
 </Project>
