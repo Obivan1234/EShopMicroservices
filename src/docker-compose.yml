@@ -12,6 +12,12 @@ services:
   orderdb:
     image: mcr.microsoft.com/mssql/server
 
+  keycloakdb:
+    image: postgres:17
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.4.2
+
   messagebroker:
     image: rabbitmq:management
 
@@ -55,3 +61,4 @@ services:
 volumes:
   postgres_catalog:
   postgres_basket:
+  postgres_keycloak:

@@ -22,5 +22,19 @@ public class GetProductsEndpoint : ICarterModule
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .WithSummary("Get Products")
         .WithDescription("Get Products");
+
+        app.MapGet("/products/test-auth", (HttpContext context) =>
+        {
+            var username = context.User.Identity?.Name;
+
+            return Results.Ok(new
+            {
+                Message = "Authentication successful",
+                Username = username,
+                UserId = context.User.FindFirst("sub")?.Value
+            });
+        })
+        .RequireAuthorization()
+        .WithName("TestAuthentication");
     }
 }

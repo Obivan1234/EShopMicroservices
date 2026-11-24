@@ -41,6 +41,37 @@ services:
     ports:
       - "1433:1433"
 
+
+  keycloakdb:
+    container_name: keycloakdb
+    environment:
+      - POSTGRES_USER=keycloak
+      - POSTGRES_PASSWORD=keycloak
+      - POSTGRES_DB=KeycloakDb        
+    restart: always
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_keycloak:/var/lib/postgresql/data/
+
+  keycloak:
+    container_name: keycloak
+    restart: always
+    environment:
+      - KC_HOSTNAME=http://localhost:8085
+      - KC_HOSTNAME_BACKCHANNEL_DYNAMIC=true
+      - KC_DB=postgres
+      - KC_DB_URL=jdbc:postgresql://keycloakdb:5432/KeycloakDb
+      - KC_DB_USERNAME=keycloak
+      - KC_DB_PASSWORD=keycloak
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
+    depends_on:
+      - keycloakdb
+    ports:
+      - "8085:8080"
+    command: start-dev
+
   messagebroker:
     container_name: messagebroker
     hostname: ecommerce-mq
@@ -58,6 +89,7 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
       - ConnectionStrings__Database=Server=catalogdb;Port=5432;Database=CatalogDb;User Id=postgres;Password=postgres;Include Error Detail=true
+      - Keycloak__MetadataAddress=http://keycloak:8080/realms/eshop/.well-known/openid-configuration
     depends_on:
       - catalogdb
     ports:
